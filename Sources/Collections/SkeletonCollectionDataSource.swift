@@ -9,6 +9,7 @@
 import UIKit
 
 public typealias ReusableCellIdentifier = String
+public typealias SupplementaryElementKind = String
 
 class SkeletonCollectionDataSource: NSObject {
     
@@ -57,5 +58,10 @@ extension SkeletonCollectionDataSource: UICollectionViewDataSource {
         let cellIdentifier = originalCollectionViewDataSource?.collectionSkeletonView(collectionView, cellIdentifierForItemAt: indexPath) ?? ""
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let viewIdentifier = originalCollectionViewDataSource?.collectionSkeletonView(collectionView, viewForSupplementaryElementOfKind: kind, indexPath: indexPath) ?? ""
+        return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: viewIdentifier, for:indexPath)
     }
 }
